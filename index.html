@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100b0d">
+<meta name="description" content="赤刃亭isくれはの創作ポートフォリオ。料理、イラスト、デザイン、ハンドメイドなど。">
+<title>赤刃亭isポートフォリオ</title>
+
+<style>
+:root {
+  --black: #100b0d;
+  --panel: #191114;
+  --red: #8f172b;
+  --red-light: #c32c43;
+  --gold: #d8b56b;
+  --ivory: #eee5d7;
+  --muted: #aa9a94;
+  --line: rgba(216,181,107,.35);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--ivory);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN",
+    "Noto Serif JP", serif;
+  line-height: 1.9;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button, input { font: inherit; }
+
+::selection {
+  background: var(--red);
+  color: white;
+}
+
+/* ===== 紅葉アニメーション ===== */
+
+#leaves {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.leaf {
+  position: absolute;
+  top: -50px;
+  width: var(--size);
+  height: calc(var(--size) * 1.38);
+  left: var(--left);
+  opacity: var(--opacity);
+  background: var(--leaf-color);
+  clip-path: polygon(
+    50% 0%, 66% 17%, 91% 23%, 77% 43%,
+    100% 56%, 72% 64%, 65% 85%, 50% 100%,
+    35% 85%, 28% 64%, 0% 56%, 23% 43%,
+    9% 23%, 34% 17%
+  );
+  animation: fall var(--duration) linear var(--delay) infinite;
+  will-change: transform;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -5vh, 0)
+      rotate(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translate3d(var(--sway), 27vh, 0)
+      rotate(110deg) rotateY(65deg);
+  }
+  50% {
+    transform: translate3d(calc(var(--sway) * -.65), 55vh, 0)
+      rotate(230deg) rotateY(160deg);
+  }
+  75% {
+    transform: translate3d(var(--sway), 79vh, 0)
+      rotate(330deg) rotateY(60deg);
+  }
+  100% {
+    transform: translate3d(calc(var(--sway) * -.3), 115vh, 0)
+      rotate(520deg) rotateY(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+  }
+  .leaf { animation-duration: 45s !important; }
+}
+
+/* ===== 共通 ===== */
+
+.container {
+  width: min(1120px, 90%);
+  margin-inline: auto;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: .72rem;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+}
+
+.section {
+  padding: 105px 0;
+  position: relative;
+}
+
+.section-heading {
+  margin-bottom: 45px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 17px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: .12em;
+  margin: 8px 0 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: .86rem;
+  margin: 4px 0 0;
+}
+
+.gold-line {
+  width: 55px;
+  height: 2px;
+  background: var(--gold);
+  margin-top: 17px;
+}
+
+/* ===== ナビゲーション ===== */
+
+header {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid rgba(216,181,107,.2);
+  background: rgba(16,11,13,.72);
+  backdrop-filter: blur(12px);
+}
+
+.nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  font-size: 1.05rem;
+  color: var(--gold);
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-family: sans-serif;
+  font-size: .7rem;
+  letter-spacing: .12em;
+}
+
+.nav-links a {
+  color: #e5d8d0;
+  transition: color .2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+/* ===== ヒーロー ===== */
+
+.hero {
+  min-height: 760px;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 72% 42%, #42151f 0%, transparent 44%),
+    linear-gradient(135deg, #100b0d, #281016 55%, #100b0d);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--hero-image, none);
+  background-size: cover;
+  background-position: center;
+  opacity: .55;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(12,7,9,.9), rgba(12,7,9,.25)),
+    linear-gradient(0deg, var(--black), transparent 35%);
+}
+
+.hero-inner {
+  width: min(1000px, 88%);
+  padding: 120px 0 100px;
+  position: relative;
+}
+
+.hero-kicker {
+  color: var(--gold);
+  letter-spacing: .4em;
+  font-size: .75rem;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  font-size: clamp(2.25rem, 7.2vw, 5.3rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.35;
+  margin: 0;
+  text-shadow: 0 4px 35px #000;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--gold);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  letter-spacing: .08em;
+  margin-top: 32px;
+}
+
+.hero-copy {
+  color: #cbbdb7;
+  font-size: .9rem;
+  white-space: pre-line;
+  margin-top: 8px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 160px;
+  padding: 11px 22px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  letter-spacing: .1em;
+  font-size: .82rem;
+  transition: .25s;
+  cursor: pointer;
+  background: transparent;
+}
+
+.btn.primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.btn:hover {
+  background: var(--gold);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+.scroll-note {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+  font: 10px sans-serif;
+  letter-spacing: .3em;
+}
+
+/* ===== About ===== */
+
+.about {
+  background:
+    radial-gradient(ellipse at 100% 0%, #301018, transparent 55%),
+    var(--black);
+}
+
+.about-content {
+  max-width: 760px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-mark {
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+.about-content p {
+  color: #d5c6be;
+  font-size: .98rem;
+  line-height: 2.5;
+}
+
+/* ===== Works ===== */
+
+.works-section {
+  background: #140d10;
+}
+
+.work-category { margin-bottom: 55px; }
+
+.category-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: .14em;
+  border-left: 3px solid var(--red-light);
+  padding-left: 13px;
+  margin: 0 0 20px;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.work-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #29161b, #100b0d);
+  border: 1px solid rgba(216,181,107,.25);
+  cursor: pointer;
+  transition: border-color .25s, transform .25s;
+}
+
+.work-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.work-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .5s;
+}
+
+.work-card:hover img { transform: scale(1.045); }
+
+.work-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--gold);
+  background:
+    radial-gradient(ellipse, rgba(143,23,43,.28), transparent 70%);
+}
+
+.work-placeholder .symbol { font-size: 2rem; }
+
+.work-placeholder small {
+  font-family: sans-serif;
+  font-size: .65rem;
+  letter-spacing: .2em;
+  color: var(--muted);
+}
+
+.work-upload {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.work-card:focus-within {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ===== Videos ===== */
+
+.videos-section {
+  background: var(--black);
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.video-card {
+  border: 1px solid var(--line);
+  padding: 30px;
+  background: linear-gradient(145deg, #211216, #120c0e);
+  text-align: center;
+  transition: border-color .25s;
+}
+
+.video-card:hover { border-color: var(--gold); }
+
+.channel-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #f5eee7;
+  color: #c52235;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--gold);
+  overflow: hidden;
+}
+
+.channel-icon svg { width: 37px; height: 37px; }
+
+.video-card h3 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.video-card p {
+  font-size: .8rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.channel-url {
+  color: var(--gold);
+  font-family: sans-serif;
+  font-size: .78rem;
+  overflow-wrap: anywhere;
+}
+
+.channel-url:hover { text-decoration: underline; }
+
+/* ===== Links / SNS ===== */
+
+.links-section {
+  background: #170e11;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.015);
+  padding: 22px;
+  transition: .2s;
+}
+
+.social-card:hover {
+  background: rgba(143,23,43,.18);
+  border-color: var(--gold);
+}
+
+.social-icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  flex: 0 0 45px;
+  color: var(--gold);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: .9rem;
+}
+
+.social-card strong {
+  display: block;
+  font-size: .95rem;
+  font-weight: 500;
+}
+
+.social-card small {
+  display: block;
+  font-family: sans-serif;
+  font-size: .72rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+/* ===== Contact ===== */
+
+.contact-section {
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, #38131e, transparent 70%),
+    var(--black);
+}
+
+.contact-section .section-heading { border: 0; }
+
+.contact-copy {
+  color: #cbbdb7;
+  margin: 0 auto 30px;
+  font-size: .9rem;
+}
+
+.contact-x {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 30px;
+  background: var(--red);
+  border: 1px solid var(--gold);
+  color: white;
+  transition: .25s;
+}
+
+.contact-x:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.contact-x svg { width: 22px; height: 22px; }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 5%;
+  text-align: center;
+  font-size: .7rem;
+  color: var(--muted);
+  letter-spacing: .08em;
+}
+
+/* ===== 画像カスタマイズ ===== */
+
+.customize {
+  position: fixed;
+  z-index: 50;
+  bottom: 16px;
+  right: 16px;
+}
+
+.customize summary {
+  cursor: pointer;
+  list-style: none;
+  background: #211216;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 10px 15px;
+  font-size: .75rem;
+  box-shadow: 0 4px 25px #0008;
+}
+
+.customize summary::-webkit-details-marker { display: none; }
+
+.customize-panel {
+  width: min(310px, calc(100vw - 32px));
+  max-height: 65vh;
+  overflow: auto;
+  padding: 18px;
+  background: #1a1013;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 25px #0009;
+}
+
+.customize-panel h3 {
+  color: var(--gold);
+  font-size: .95rem;
+  margin: 0 0 8px;
+}
+
+.customize-panel p {
+  color: var(--muted);
+  font-size: .75rem;
+  line-height: 1.8;
+}
+
+.customize-panel label {
+  display: block;
+  margin: 14px 0 5px;
+  font-size: .8rem;
+}
+
+.customize-panel input[type="file"] {
+  display: block;
+  width: 100%;
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.customize-panel button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+}
+
+#status {
+  color: var(--gold);
+  font-size: .72rem;
+}
+
+@media (max-width: 700px) {
+  .nav {
+    padding: 12px 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .nav-links {
+    width: 100%;
+    gap: 8px 15px;
+    font-size: .65rem;
+  }
+
+  .hero { min-height: 720px; min-height: 95svh; }
+  .hero-inner { padding-top: 150px; }
+
+  .section { padding: 75px 0; }
+  .section-heading { margin-bottom: 30px; }
+
+  .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .work-category { margin-bottom: 38px; }
+
+  .video-grid, .social-grid { grid-template-columns: 1fr; }
+  .video-card { padding: 25px 15px; }
+
+  .about-content p { font-size: .88rem; line-height: 2.2; }
+
+  .customize { bottom: 10px; right: 10px; }
+}
+
+@media (max-width: 370px) {
+  .brand { font-size: .9rem; }
+  .nav-links { gap: 7px 10px; }
+  .hero h1 { font-size: 2rem; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="leaves" aria-hidden="true"></div>
+
+<header>
+  <nav class="nav container" aria-label="メインナビゲーション">
+    <a class="brand" href="#home">赤刃亭 is</a>
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#works">WORKS</a>
+      <a href="#videos">VIDEOS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#links">LINKS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-kicker">CREATIVE PORTFOLIO</div>
+      <h1>赤刃亭is<span>ポートフォリオ</span></h1>
+
+      <div class="hero-subtitle">
+        創る。壊す。そしてまた壊す。
+      </div>
+
+      <p class="hero-copy">成功体験が失敗を招く事もある故に、
+過去に囚われないよう生きてます。</p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="#works">作品を見る</a>
+        <a class="btn" href="#contact">CONTACT</a>
+      </div>
+    </div>
+    <div class="scroll-note">SCROLL ↓</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">ABOUT</div>
+        <h2>境界のない創作</h2>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="about-content">
+        <div class="about-mark" aria-hidden="true">紅</div>
+        <p>赤刃亭isくれはのポートフォリオへようこそ。<br>
+        ここでは、境界無く作ってきた創作物を紹介しています。<br>
+        気が付くと何にでも手を出していますよ。<br>
+        お気を付け遊ばせ？</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section class="section works-section" id="works">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">WORKS</div>
+        <h2>創作物</h2>
+        <p>画像を選択すると、自分の作品画像に差し替えられます。</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div id="work-categories"></div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="section videos-section" id="videos">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">VIDEOS</div>
+        <h2>動画チャンネル</h2>
+        <p>料理とゲーム、それぞれの創作・活動記録。</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="channel-icon" aria-label="YouTubeアイコン">
+            <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+              <rect x="3" y="10" width="42" height="28" rx="9"/>
+              <path d="M20 17 L32 24 L20 31 Z" fill="#fff"/>
+            </svg>
+          </div>
+          <h3>料理アカウント</h3>
+          <p>赤刃亭のくれは</p>
+          <a class="channel-url"
+             href="https://www.youtube.com/@赤刃亭のくれは"
+             target="_blank" rel="noopener noreferrer">
+            https://www.youtube.com/@赤刃亭のくれは
+          </a>
+        </article>
+
+        <article class="video-card">
+          <div class="channel-icon" aria-label="YouTubeアイコン">
+            <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+              <rect x="3" y="10" width="42" height="28" rx="9"/>
+              <path d="M20 17 L32 24 L20 31 Z" fill="#fff"/>
+            </svg>
+          </div>
+          <h3>ゲームアカウント</h3>
+          <p>赤刃亭isくれは</p>
+          <a class="channel-url"
+             href="https://www.youtube.com/@赤刃亭isくれは"
+             target="_blank" rel="noopener noreferrer">
+            https://www.youtube.com/@赤刃亭isくれは
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="section links-section" id="links">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">LINKS</div>
+        <h2>各種リンク</h2>
+        <p>活動場所・制作物・SNS。</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="social-grid">
+
+        <!-- TODO: YOUR_X_ID_1 を実際のX IDに変更 -->
+        <a class="social-card" href="https://x.com/YOUR_X_ID_1"
+           target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">𝕏</span>
+          <span>
+            <strong>X / メインアカウント</strong>
+            <small>@YOUR_X_ID_1 — URLを変更してください</small>
+          </span>
+        </a>
+
+        <!-- TODO: YOUR_X_ID_2 を実際のX IDに変更 -->
+        <a class="social-card" href="https://x.com/YOUR_X_ID_2"
+           target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">𝕏</span>
+          <span>
+            <strong>X / サブアカウント</strong>
+            <small>@YOUR_X_ID_2 — URLを変更してください</small>
+          </span>
+        </a>
+
+        <!-- TODO: YOUR_GITHUB_ID を実際のGitHub IDに変更 -->
+        <a class="social-card" href="https://github.com/YOUR_GITHUB_ID"
+           target="_blank" rel="noopener noreferrer">
+          <span class="social-icon">GH</span>
+          <span>
+            <strong>GitHub</strong>
+            <small>制作物・コード</small>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">CONTACT</div>
+        <h2>ご連絡はこちら</h2>
+        <div class="gold-line" style="margin-inline:auto"></div>
+      </div>
+
+      <p class="contact-copy">
+        ご依頼・ご感想などは、XのDMからお気軽にどうぞ。
+      </p>
+
+      <!-- TODO: 実際のX IDに変更 -->
+      <a class="contact-x"
+         href="https://x.com/YOUR_X_ID_1"
+         target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.9 2H22l-6.78 7.75L23.2 22h-6.25l-4.9-7.42L5.55 22H2.4l7.25-8.29L1.9 2h6.4l4.43 6.77L18.9 2Zm-1.1 17.8h1.73L7.36 4.08H5.5L17.8 19.8Z"/>
+        </svg>
+        XでDMを送る ↗
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>赤刃亭isポートフォリオ</div>
+  <div>© <span id="year"></span> KUREHA</div>
+</footer>
+
+<!-- 画像差し替えパネル -->
+<details class="customize">
+  <summary>⚙ 画像をカスタマイズ</summary>
+  <div class="customize-panel">
+    <h3>サイト画像の設定</h3>
+    <p>
+      背景画像はこのブラウザでプレビューできます。
+      作品画像は各作品の枠をクリックして選択してください。
+      選択した画像は自動的にGitHubへは保存されません。
+    </p>
+
+    <label for="hero-upload">トップ背景画像</label>
+    <input id="hero-upload" type="file" accept="image/*">
+
+    <button id="clear-background" type="button">
+      背景画像を解除
+    </button>
+
+    <p id="status" role="status" aria-live="polite"></p>
+  </div>
+</details>
+
+<script>
+/* ===== 作品データ：合計10点 =====
+   画像は各作品の枠をクリックして選択できます。
+   公開時は各 image を images/xxx.jpg に変更してもOK。
+*/
+
+const categories = [
+  {
+    name: "Xヘッダー",
+    symbol: "✧",
+    works: [
+      { label: "Xヘッダー 1", image: "" },
+      { label: "Xヘッダー 2", image: "" },
+      { label: "Xヘッダー 3", image: "" }
+    ]
+  },
+  {
+    name: "料理",
+    symbol: "◇",
+    works: [
+      { label: "料理 1", image: "" },
+      { label: "料理 2", image: "" },
+      { label: "料理 3", image: "" }
+    ]
+  },
+  {
+    name: "絵",
+    symbol: "筆",
+    works: [
+      { label: "絵 1", image: "" },
+      { label: "絵 2", image: "" }
+    ]
+  },
+  {
+    name: "ハンドメイドアクセサリー",
+    symbol: "✧",
+    works: [
+      { label: "アクセサリー 1", image: "" }
+    ]
+  },
+  {
+    name: "プラモデル",
+    symbol: "▧",
+    works: [
+      { label: "プラモデル 1", image: "" }
+    ]
+  }
+];
+
+const workRoot = document.getElementById("work-categories");
+let workIndex = 0;
+
+categories.forEach(category => {
+  const section = document.createElement("section");
+  section.className = "work-category";
+
+  const heading = document.createElement("h3");
+  heading.className = "category-title";
+  heading.textContent = category.name;
+  section.appendChild(heading);
+
+  const grid = document.createElement("div");
+  grid.className = "work-grid";
+
+  category.works.forEach(work => {
+    const card = document.createElement("div");
+    card.className = "work-card";
+    card.setAttribute("role", "group");
+    card.setAttribute("aria-label", category.name + "の画像");
+
+    const preview = document.createElement("div");
+    preview.className = "work-placeholder";
+    preview.innerHTML =
+      '<span class="symbol" aria-hidden="true">' +
+      category.symbol +
+      '</span><small>IMAGE ' +
+      String(workIndex + 1).padStart(2, "0") +
+      '</small>';
+
+    if (work.image) {
+      const img = document.createElement("img");
+      img.src = work.image;
+      img.alt = category.name + "の作品";
+      preview.replaceChildren(img);
+    }
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.className = "work-upload";
+    input.setAttribute("aria-label", category.name + "の画像を選択");
+
+    input.addEventListener("change", () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("画像ファイルを選択してください。");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = document.createElement("img");
+        img.src = reader.result;
+        img.alt = category.name + "の作品";
+        preview.replaceChildren(img);
+        document.getElementById("status").textContent =
+          category.name + "の画像をプレビューしました。";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    card.append(preview, input);
+    grid.appendChild(card);
+    workIndex++;
+  });
+
+  section.appendChild(grid);
+  workRoot.appendChild(section);
+});
+
+/* ===== 背景画像アップロード ===== */
+
+const heroUpload = document.getElementById("hero-upload");
+const hero = document.querySelector(".hero");
+const status = document.getElementById("status");
+
+heroUpload.addEventListener("change", () => {
+  const file = heroUpload.files && heroUpload.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("画像ファイルを選択してください。");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    hero.style.setProperty(
+      "--hero-image",
+      'url("' + reader.result + '")'
+    );
+    status.textContent = "背景画像をプレビューしました。";
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById("clear-background").addEventListener("click", () => {
+  hero.style.removeProperty("--hero-image");
+  heroUpload.value = "";
+  status.textContent = "背景画像を解除しました。";
+});
+
+/* ===== 不規則な形・速度の紅葉 ===== */
+
+const leaves = document.getElementById("leaves");
+const leafColors = [
+  "#a51f32",
+  "#c43a36",
+  "#7c1728",
+  "#d18a36",
+  "#b84b27",
+  "#8b2339",
+  "#d8a84e"
+];
+
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+for (let i = 0; i < 30; i++) {
+  const leaf = document.createElement("span");
+  leaf.className = "leaf";
+
+  const size = random(9, 21);
+  const duration = random(17, 38);
+  const delay = random(-38, 0);
+
+  leaf.style.setProperty("--size", size + "px");
+  leaf.style.setProperty("--left", random(0, 100) + "%");
+  leaf.style.setProperty("--duration", duration + "s");
+  leaf.style.setProperty("--delay", delay + "s");
+  leaf.style.setProperty("--sway", random(-100, 100) + "px");
+  leaf.style.setProperty("--opacity", random(.45, .9));
+  leaf.style.setProperty(
+    "--leaf-color",
+    leafColors[Math.floor(Math.random() * leafColors.length)]
+  );
+
+  leaves.appendChild(leaf);
+}
+
+/* 年表示 */
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
+
+</body>
+</html>
