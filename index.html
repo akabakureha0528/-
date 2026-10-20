@@ -1,0 +1,1275 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10090c">
+
+  <title>赤刃亭isポートフォリオ</title>
+  <meta name="description"
+        content="赤刃亭isくれはのポートフォリオ。創る。壊す。そしてまた壊す。">
+
+  <style>
+    /* =========================================
+       赤刃亭isポートフォリオ
+       色・余白・背景などの基本設定
+       ========================================= */
+
+    :root {
+      --black: #10090c;
+      --black-soft: #1b1015;
+      --red: #8f172b;
+      --red-light: #c13a45;
+      --gold: #c9a85b;
+      --gold-light: #ead6a0;
+      --white: #f5eee9;
+      --muted: #b7a5a8;
+
+      --page-width: 1200px;
+      --section-space: 110px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family:
+        "Noto Serif JP",
+        "Yu Mincho",
+        "Hiragino Mincho ProN",
+        serif;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    body::selection {
+      background: var(--red);
+      color: white;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+      width: min(var(--page-width), 90%);
+      margin-inline: auto;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .section {
+      position: relative;
+      padding: var(--section-space) 0;
+      scroll-margin-top: 65px;
+    }
+
+    .section-heading {
+      margin: 0 0 12px;
+      color: var(--gold-light);
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 500;
+      letter-spacing: .12em;
+    }
+
+    .section-subtitle {
+      margin: 0 0 48px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .section-heading::before {
+      content: "◆";
+      display: block;
+      margin-bottom: 10px;
+      color: var(--red-light);
+      font-size: 12px;
+    }
+
+    /* =========================================
+       紅葉の舞い
+       JavaScriptで形・大きさ・速度をランダム生成
+       ========================================= */
+
+    #falling-leaves {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .leaf {
+      position: absolute;
+      top: -50px;
+      left: 0;
+      width: var(--size);
+      height: calc(var(--size) * 1.35);
+      opacity: var(--opacity);
+      background: var(--leaf-color);
+      border-radius: 100% 0 100% 0;
+      transform: rotate(var(--rotation));
+      animation:
+        leaf-fall var(--duration) linear var(--delay) infinite;
+      will-change: transform;
+    }
+
+    .leaf.shape-1 {
+      border-radius: 0 80% 0 80%;
+      clip-path: polygon(50% 0, 100% 35%, 75% 65%,
+                         100% 100%, 35% 80%, 0 40%);
+    }
+
+    .leaf.shape-2 {
+      border-radius: 50% 0 50% 0;
+      clip-path: polygon(50% 0, 100% 25%, 82% 65%,
+                         100% 90%, 48% 100%, 0 70%, 18% 30%);
+    }
+
+    .leaf.shape-3 {
+      clip-path: polygon(50% 0, 66% 28%, 100% 18%,
+                         83% 48%, 100% 70%, 63% 68%,
+                         50% 100%, 35% 68%, 0 75%,
+                         18% 45%, 0 20%, 35% 28%);
+    }
+
+    .leaf.shape-4 {
+      border-radius: 80% 0 80% 0;
+      clip-path: polygon(50% 0, 100% 45%, 70% 100%, 0 65%);
+    }
+
+    @keyframes leaf-fall {
+      0% {
+        transform:
+          translate3d(0, -5vh, 0)
+          rotate(var(--rotation));
+      }
+
+      25% {
+        transform:
+          translate3d(var(--sway), 25vh, 0)
+          rotate(calc(var(--rotation) + 100deg));
+      }
+
+      50% {
+        transform:
+          translate3d(calc(var(--sway) * -0.7), 55vh, 0)
+          rotate(calc(var(--rotation) + 210deg));
+      }
+
+      75% {
+        transform:
+          translate3d(var(--sway), 80vh, 0)
+          rotate(calc(var(--rotation) + 300deg));
+      }
+
+      100% {
+        transform:
+          translate3d(calc(var(--sway) * -0.5), 115vh, 0)
+          rotate(calc(var(--rotation) + 420deg));
+      }
+    }
+
+    /* =========================================
+       ヘッダー・ナビゲーション
+       ========================================= */
+
+    .site-header {
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(16, 9, 12, .86);
+      border-bottom: 1px solid rgba(201, 168, 91, .24);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      width: min(1400px, 94%);
+      min-height: 68px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--gold-light);
+      font-size: 15px;
+      letter-spacing: .07em;
+      white-space: nowrap;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(12px, 2vw, 28px);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .nav-list a {
+      position: relative;
+      display: block;
+      padding: 22px 0;
+      color: #e4d8d6;
+      font-size: 11px;
+      letter-spacing: .13em;
+      transition: color .25s;
+    }
+
+    .nav-list a:hover {
+      color: var(--gold-light);
+    }
+
+    .nav-list a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 15px;
+      left: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s;
+    }
+
+    .nav-list a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* =========================================
+       HOME
+       添付画像は assets/top-background.jpg に保存
+       ========================================= */
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: min(800px, 100svh);
+      min-height: max(650px, 100svh);
+      place-items: center;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(15, 5, 10, .25),
+          rgba(15, 5, 10, .10) 50%,
+          rgba(15, 5, 10, .65)
+        ),
+        linear-gradient(
+          0deg,
+          var(--black),
+          transparent 28%,
+          rgba(15, 5, 10, .05) 70%,
+          rgba(15, 5, 10, .4)
+        ),
+        url("assets/top-background.jpg")
+        center center / cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 1px solid rgba(201, 168, 91, .32);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(1100px, 88%);
+      margin: 80px auto 0;
+      text-align: center;
+      text-shadow: 0 3px 25px #10090c;
+    }
+
+    .hero-eyebrow {
+      margin: 0 0 22px;
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: .38em;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(30px, 6.5vw, 70px);
+      font-weight: 500;
+      letter-spacing: .08em;
+      line-height: 1.5;
+    }
+
+    .hero-copy {
+      margin: 20px 0 0;
+      font-size: clamp(14px, 2.3vw, 21px);
+      letter-spacing: .13em;
+    }
+
+    .hero-description {
+      margin-top: 14px;
+      color: #f0e2dd;
+      font-size: clamp(12px, 1.6vw, 15px);
+      letter-spacing: .06em;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      min-width: 205px;
+      margin-top: 42px;
+      padding: 13px 24px;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: .2em;
+      transition: background .3s, color .3s;
+    }
+
+    .hero-link:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .hero-link span {
+      font-size: 18px;
+    }
+
+    /* =========================================
+       WORKS
+       3列PC / 2列スマホ
+       画像を同じ名前で差し替えるだけでOK
+       ========================================= */
+
+    .works-section {
+      background:
+        radial-gradient(
+          ellipse at 50% 0,
+          rgba(115, 20, 39, .18),
+          transparent 60%
+        ),
+        var(--black);
+    }
+
+    .work-category + .work-category {
+      margin-top: 65px;
+    }
+
+    .category-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0 0 22px;
+      color: var(--gold-light);
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: .16em;
+    }
+
+    .category-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(
+        90deg,
+        rgba(201, 168, 91, .65),
+        transparent
+      );
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .work-item {
+      position: relative;
+      margin: 0;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #24151a;
+      border: 1px solid rgba(201, 168, 91, .2);
+    }
+
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s cubic-bezier(.2, .7, .2, 1),
+                  filter .4s;
+    }
+
+    .work-item:hover img {
+      transform: scale(1.055);
+      filter: brightness(1.08);
+    }
+
+    .work-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid transparent;
+      transition: border-color .3s;
+      pointer-events: none;
+    }
+
+    .work-item:hover::after {
+      border-color: rgba(234, 214, 160, .75);
+    }
+
+    /* =========================================
+       VIDEOS
+       ========================================= */
+
+    .videos-section {
+      background: #180d12;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .video-card {
+      position: relative;
+      padding: 30px;
+      border: 1px solid rgba(201, 168, 91, .3);
+      background:
+        linear-gradient(
+          140deg,
+          rgba(126, 22, 43, .2),
+          rgba(16, 9, 12, .4)
+        );
+      transition: border-color .3s, transform .3s;
+    }
+
+    .video-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .account-icon {
+      display: grid;
+      width: 72px;
+      height: 72px;
+      place-items: center;
+      margin-bottom: 22px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: rgba(16, 9, 12, .65);
+      color: var(--gold-light);
+    }
+
+    .account-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .account-type {
+      margin: 0 0 5px;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: .2em;
+    }
+
+    .video-card h3 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    .account-url {
+      display: block;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .account-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 10px 0;
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: .12em;
+    }
+
+    .account-button span {
+      transition: transform .2s;
+    }
+
+    .account-button:hover span {
+      transform: translateX(5px);
+    }
+
+    /* =========================================
+       ABOUT
+       背景を変えるには assets/about-bg.jpg を交換
+       ========================================= */
+
+    .about-section {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(16, 9, 12, .95),
+          rgba(16, 9, 12, .78)
+        ),
+        url("assets/about-bg.jpg")
+        center / cover no-repeat,
+        var(--black);
+    }
+
+    .about-inner {
+      max-width: 800px;
+    }
+
+    .about-text {
+      padding-left: 25px;
+      border-left: 2px solid var(--red);
+      color: #e4d8d6;
+      font-size: clamp(14px, 2vw, 17px);
+      line-height: 2.5;
+    }
+
+    .about-emphasis {
+      margin-top: 25px;
+      color: var(--gold-light);
+      font-size: 13px;
+      letter-spacing: .12em;
+    }
+
+    /* =========================================
+       LINKS
+       ========================================= */
+
+    .links-section {
+      background: var(--black-soft);
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+      padding: 25px;
+      border: 1px solid rgba(201, 168, 91, .25);
+      transition: background .3s, border-color .3s;
+    }
+
+    .social-card:hover {
+      background: rgba(143, 23, 43, .15);
+      border-color: var(--gold);
+    }
+
+    .social-icon {
+      display: grid;
+      flex: 0 0 52px;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border-radius: 50%;
+      background: #25151b;
+      color: var(--gold-light);
+    }
+
+    .social-icon svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .social-info {
+      min-width: 0;
+    }
+
+    .social-info h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .social-info p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-family: sans-serif;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    /* =========================================
+       CONTACT
+       ========================================= */
+
+    .contact-section {
+      padding: 100px 0 120px;
+      text-align: center;
+      background:
+        radial-gradient(
+          ellipse at 50% 100%,
+          rgba(143, 23, 43, .25),
+          transparent 65%
+        ),
+        var(--black);
+    }
+
+    .contact-section .section-subtitle {
+      margin-bottom: 25px;
+    }
+
+    .contact-copy {
+      margin-bottom: 32px;
+      color: #d7c8c7;
+      font-size: 14px;
+    }
+
+    .contact-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      min-width: 240px;
+      padding: 16px 28px;
+      border: 1px solid var(--gold);
+      background: var(--red);
+      color: var(--white);
+      font-size: 13px;
+      letter-spacing: .15em;
+      transition: background .3s;
+    }
+
+    .contact-button:hover {
+      background: #a92338;
+    }
+
+    .contact-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* =========================================
+       フッター
+       ========================================= */
+
+    .site-footer {
+      padding: 28px 5%;
+      border-top: 1px solid rgba(201, 168, 91, .25);
+      text-align: center;
+      background: #0b0608;
+    }
+
+    .footer-brand {
+      color: var(--gold-light);
+      font-size: 14px;
+      letter-spacing: .12em;
+    }
+
+    .copyright {
+      margin: 8px 0 0;
+      color: #8c7c80;
+      font-family: sans-serif;
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    /* =========================================
+       スマホ対応
+       ========================================= */
+
+    @media (max-width: 760px) {
+      :root {
+        --section-space: 75px;
+      }
+
+      .header-inner {
+        width: 100%;
+        min-height: auto;
+        display: block;
+        padding: 10px 12px 0;
+      }
+
+      .brand {
+        display: block;
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .nav-list {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0 17px;
+      }
+
+      .nav-list a {
+        padding: 8px 0 10px;
+        font-size: 10px;
+      }
+
+      .nav-list a::after {
+        bottom: 5px;
+      }
+
+      .hero {
+        min-height: 100svh;
+        background-position: 43% center;
+      }
+
+      .hero::before {
+        inset: 8px;
+      }
+
+      .hero-content {
+        width: 90%;
+        margin-top: 100px;
+      }
+
+      .hero h1 {
+        font-size: clamp(26px, 7vw, 44px);
+      }
+
+      .hero-eyebrow {
+        font-size: 10px;
+        letter-spacing: .22em;
+      }
+
+      .hero-copy {
+        font-size: 14px;
+      }
+
+      .hero-description {
+        font-size: 12px;
+        line-height: 2.1;
+      }
+
+      .section-heading {
+        font-size: 32px;
+      }
+
+      .section-subtitle {
+        margin-bottom: 32px;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .work-category + .work-category {
+        margin-top: 42px;
+      }
+
+      .category-title {
+        font-size: 15px;
+      }
+
+      .video-grid,
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .video-card {
+        padding: 17px 13px;
+      }
+
+      .account-icon {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 14px;
+      }
+
+      .account-icon svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .video-card h3 {
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .account-url {
+        font-size: 10px;
+      }
+
+      .account-button {
+        gap: 5px;
+        font-size: 10px;
+      }
+
+      .social-card {
+        display: block;
+        padding: 15px 12px;
+      }
+
+      .social-icon {
+        margin-bottom: 12px;
+      }
+
+      .social-info h3 {
+        font-size: 13px;
+      }
+
+      .social-info p {
+        font-size: 10px;
+      }
+
+      .about-text {
+        padding-left: 17px;
+        font-size: 14px;
+        line-height: 2.3;
+      }
+    }
+
+    /* 動きを減らしたい環境では紅葉を停止 */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      #falling-leaves {
+        display: none;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 舞い落ちる紅葉 -->
+  <div id="falling-leaves" aria-hidden="true"></div>
+
+  <!-- ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home">赤刃亭isポートフォリオ</a>
+
+      <nav aria-label="メインナビゲーション">
+        <ul class="nav-list">
+          <li><a href="#home">HOME</a></li>
+          <li><a href="#works">WORKS</a></li>
+          <li><a href="#videos">VIDEOS</a></li>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#links">LINKS</a></li>
+          <li><a href="#contact">CONTACT</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HOME ================= -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="hero-eyebrow">AKABATEI IS KU RE HA</p>
+
+        <h1>赤刃亭isポートフォリオ</h1>
+
+        <p class="hero-copy">
+          創る。壊す。そしてまた壊す。
+        </p>
+
+        <p class="hero-description">
+          成功体験が失敗を招く事もある故に、<br>
+          過去に囚われないよう生きてます。
+        </p>
+
+        <a class="hero-link" href="#works">
+          VIEW WORKS <span aria-hidden="true">↘</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= WORKS ================= -->
+    <section class="section works-section" id="works">
+      <div class="container">
+        <h2 class="section-heading">WORKS</h2>
+        <p class="section-subtitle">創作物一覧</p>
+
+        <!-- Xヘッダー：3点 -->
+        <div class="work-category">
+          <h3 class="category-title">X HEADER</h3>
+
+          <div class="works-grid">
+            <figure class="work-item">
+              <img src="assets/works/header-01.jpg"
+                   alt="Xヘッダー作品 1"
+                   loading="lazy">
+            </figure>
+
+            <figure class="work-item">
+              <img src="assets/works/header-02.jpg"
+                   alt="Xヘッダー作品 2"
+                   loading="lazy">
+            </figure>
+
+            <figure class="work-item">
+              <img src="assets/works/header-03.jpg"
+                   alt="Xヘッダー作品 3"
+                   loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <!-- 料理：3点 -->
+        <div class="work-category">
+          <h3 class="category-title">COOKING</h3>
+
+          <div class="works-grid">
+            <figure class="work-item">
+              <img src="assets/works/cooking-01.jpg"
+                   alt="料理作品 1"
+                   loading="lazy">
+            </figure>
+
+            <figure class="work-item">
+              <img src="assets/works/cooking-02.jpg"
+                   alt="料理作品 2"
+                   loading="lazy">
+            </figure>
+
+            <figure class="work-item">
+              <img src="assets/works/cooking-03.jpg"
+                   alt="料理作品 3"
+                   loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <!-- イラスト：2点 -->
+        <div class="work-category">
+          <h3 class="category-title">ILLUSTRATION</h3>
+
+          <div class="works-grid">
+            <figure class="work-item">
+              <img src="assets/works/art-01.jpg"
+                   alt="イラスト作品 1"
+                   loading="lazy">
+            </figure>
+
+            <figure class="work-item">
+              <img src="assets/works/art-02.jpg"
+                   alt="イラスト作品 2"
+                   loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <!-- ハンドメイドアクセサリー：1点 -->
+        <div class="work-category">
+          <h3 class="category-title">HANDMADE ACCESSORIES</h3>
+
+          <div class="works-grid">
+            <figure class="work-item">
+              <img src="assets/works/accessory-01.jpg"
+                   alt="ハンドメイドアクセサリー作品"
+                   loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <!-- プラモデル：1点 -->
+        <div class="work-category">
+          <h3 class="category-title">PLASTIC MODELS</h3>
+
+          <div class="works-grid">
+            <figure class="work-item">
+              <img src="assets/works/model-01.jpg"
+                   alt="プラモデル作品"
+                   loading="lazy">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIDEOS ================= -->
+    <section class="section videos-section" id="videos">
+      <div class="container">
+        <h2 class="section-heading">VIDEOS</h2>
+        <p class="section-subtitle">YouTube Channels</p>
+
+        <div class="video-grid">
+          <!-- 料理チャンネル -->
+          <article class="video-card">
+            <div class="account-icon" aria-hidden="true">
+              <!-- YouTubeアイコン -->
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="5" width="20" height="14"
+                      rx="4" fill="#c9a85b"/>
+                <path d="M10 9L16 12L10 15V9Z"
+                      fill="#10090c"/>
+              </svg>
+            </div>
+
+            <p class="account-type">YOUTUBE / COOKING</p>
+            <h3>赤刃亭のくれは</h3>
+
+            <a class="account-url"
+               href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%AD%E3%81%AE%E3%81%8F%E3%82%8C%E3%81%AF"
+               target="_blank"
+               rel="noopener noreferrer">
+              youtube.com/@赤刃亭のくれは
+            </a>
+
+            <a class="account-button"
+               href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%AD%E3%81%AE%E3%81%8F%E3%82%8C%E3%81%AF"
+               target="_blank"
+               rel="noopener noreferrer">
+              チャンネルを見る <span>↗</span>
+            </a>
+          </article>
+
+          <!-- ゲームチャンネル -->
+          <article class="video-card">
+            <div class="account-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="5" width="20" height="14"
+                      rx="4" fill="#c9a85b"/>
+                <path d="M10 9L16 12L10 15V9Z"
+                      fill="#10090c"/>
+              </svg>
+            </div>
+
+            <p class="account-type">YOUTUBE / GAMING</p>
+            <h3>赤刃亭isくれは</h3>
+
+            <a class="account-url"
+               href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%ADis%E3%81%8F%E3%82%8C%E3%81%AF"
+               target="_blank"
+               rel="noopener noreferrer">
+              youtube.com/@赤刃亭isくれは
+            </a>
+
+            <a class="account-button"
+               href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%ADis%E3%81%8F%E3%82%8C%E3%81%AF"
+               target="_blank"
+               rel="noopener noreferrer">
+              チャンネルを見る <span>↗</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="about-inner">
+          <h2 class="section-heading">ABOUT</h2>
+          <p class="section-subtitle">赤刃亭isくれはについて</p>
+
+          <div class="about-text">
+            赤刃亭isくれはのポートフォリオへようこそ。<br>
+            ここでは、境界無く作ってきた創作物を紹介しています。<br>
+            気が付くと何にでも手を出していますよ。<br>
+            お気を付け遊ばせ？
+          </div>
+
+          <p class="about-emphasis">
+            創る。壊す。そしてまた壊す。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LINKS ================= -->
+    <section class="section links-section" id="links">
+      <div class="container">
+        <h2 class="section-heading">LINKS</h2>
+        <p class="section-subtitle">各種リンク</p>
+
+        <div class="social-grid">
+          <!-- X 料理アカウント -->
+          <a class="social-card"
+             href="https://x.com/kurehanizumu"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <div class="social-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6
+                  5.5 22H2.3l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1
+                  17.9h1.7L7.3 4H5.5l12.3 15.9Z"/>
+              </svg>
+            </div>
+
+            <div class="social-info">
+              <h3>X / 料理アカウント</h3>
+              <p>@kurehanizumu</p>
+            </div>
+          </a>
+
+          <!-- X ゲームアカウント -->
+          <a class="social-card"
+             href="https://x.com/noukinn_o"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <div class="social-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6
+                  5.5 22H2.3l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1
+                  17.9h1.7L7.3 4H5.5l12.3 15.9Z"/>
+              </svg>
+            </div>
+
+            <div class="social-info">
+              <h3>X / ゲームアカウント</h3>
+              <p>@noukinn_o</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <h2 class="section-heading">CONTACT</h2>
+        <p class="section-subtitle">お気軽にご連絡ください</p>
+
+        <p class="contact-copy">
+          ご連絡・ご相談はXのDMまで。
+        </p>
+
+        <a class="contact-button"
+           href="https://x.com/kurehanizumu"
+           target="_blank"
+           rel="noopener noreferrer">
+          XでDMを送る
+
+          <svg viewBox="0 0 24 24" fill="currentColor"
+               aria-hidden="true">
+            <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6
+              5.5 22H2.3l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1
+              17.9h1.7L7.3 4H5.5l12.3 15.9Z"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <a class="footer-brand" href="#home">
+      赤刃亭isポートフォリオ
+    </a>
+
+    <p class="copyright">
+      © <span id="year"></span> AKABATEI IS KUREHA
+    </p>
+  </footer>
+
+  <script>
+    /* =========================================
+       紅葉の設定
+       数字を変更すると演出の量を調整できます
+       ========================================= */
+
+    const LEAF_COUNT = 32;
+
+    const leafColors = [
+      "#8f172b",
+      "#b52b31",
+      "#d15b35",
+      "#c9a85b",
+      "#76202a",
+      "#e0a14c"
+    ];
+
+    const leafContainer = document.getElementById(
+      "falling-leaves"
+    );
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (!reduceMotion) {
+      for (let i = 0; i < LEAF_COUNT; i++) {
+        const leaf = document.createElement("span");
+
+        const size = 9 + Math.random() * 17;
+        const duration = 15 + Math.random() * 22;
+        const delay = -(Math.random() * duration);
+        const sway = 25 + Math.random() * 115;
+        const rotation = Math.floor(Math.random() * 360);
+        const opacity = 0.25 + Math.random() * 0.5;
+        const shape = Math.floor(Math.random() * 4);
+        const color = leafColors[
+          Math.floor(Math.random() * leafColors.length)
+        ];
+
+        leaf.className = `leaf shape-${shape}`;
+
+        leaf.style.left = `${Math.random() * 100}%`;
+        leaf.style.setProperty("--size", `${size}px`);
+        leaf.style.setProperty("--duration", `${duration}s`);
+        leaf.style.setProperty("--delay", `${delay}s`);
+        leaf.style.setProperty("--sway", `${sway}px`);
+        leaf.style.setProperty("--rotation", `${rotation}deg`);
+        leaf.style.setProperty("--opacity", opacity);
+        leaf.style.setProperty("--leaf-color", color);
+
+        leafContainer.appendChild(leaf);
+      }
+    }
+
+    /* コピーライトの年を自動更新 */
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+</html>
