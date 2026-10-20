@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="WORK 08">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090808"/><stop offset=".55" stop-color="#281317"/><stop offset="1" stop-color="#080707"/></linearGradient><radialGradient id="glow"><stop stop-color="#8d2936" stop-opacity=".45"/><stop offset="1" stop-color="#8d2936" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="800" fill="url(#bg)"/><ellipse cx="720" cy="340" rx="520" ry="430" fill="url(#glow)"/>
+<g fill="none" stroke="#c8a45d" stroke-opacity=".38"><path d="M70 80H1130V720H70Z"/><path d="M90 100H1110V700H90Z"/></g>
+<g fill="#a7353f" opacity=".45"><path d="M180 180q70 -70 120 0q-45 90 -120 0Z"/><path d="M910 500q60 -70 120 -10q-30 90 -120 10Z"/><path d="M350 580q45 -60 95 -10q-25 70 -95 10Z"/></g>
+<text x="600" y="355" text-anchor="middle" fill="#e5ce98" font-size="54" font-family="serif" letter-spacing="8">WORK 08</text>
+<text x="600" y="420" text-anchor="middle" fill="#c5b6a5" font-size="24" font-family="sans-serif" letter-spacing="4">REPLACE WITH YOUR ARTWORK</text><text x="900" y="640" text-anchor="end" fill="#c8a45d" font-size="28" font-family="serif" opacity=".75">08</text>
+</svg>
