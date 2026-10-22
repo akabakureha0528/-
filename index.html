@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12090d">
+  <meta name="description" content="赤刃亭isくれはのポートフォリオ。Xヘッダー、料理、絵、ハンドメイドアクセサリー、プラモデルなどの創作物を紹介しています。">
+  <title>赤刃亭isポートフォリオ</title>
+  <style>
+    :root {
+      --ink: #12090d;
+      --ink-soft: #1d0c12;
+      --panel: rgba(29, 12, 18, .87);
+      --red: #8d182b;
+      --red-bright: #c53b42;
+      --gold: #c7a66a;
+      --gold-light: #ead3a0;
+      --paper: #f5eddf;
+      --muted: #c6b9b3;
+      --line: rgba(199, 166, 106, .35);
+      --content: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        radial-gradient(ellipse at 12% 15%, rgba(116, 20, 39, .22), transparent 34rem),
+        radial-gradient(ellipse at 90% 47%, rgba(144, 94, 42, .09), transparent 32rem),
+        var(--ink);
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", Georgia, serif;
+      line-height: 1.8;
+      letter-spacing: .035em;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 4px; }
+    img { max-width: 100%; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(18, 9, 13, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      width: min(100% - 32px, var(--content));
+      margin-inline: auto;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+    .brand {
+      flex: 0 0 auto;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: .98rem;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 2vw, 25px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .main-nav::-webkit-scrollbar { display: none; }
+    .main-nav a {
+      position: relative;
+      flex: 0 0 auto;
+      padding: 21px 0 19px;
+      color: var(--muted);
+      font: 600 .72rem/1.2 Arial, sans-serif;
+      letter-spacing: .12em;
+      text-decoration: none;
+    }
+    .main-nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 12px;
+      width: 100%;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .25s ease;
+    }
+    .main-nav a:hover { color: var(--gold-light); }
+    .main-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    main, .site-footer { position: relative; z-index: 2; }
+    .hero { border-bottom: 1px solid var(--line); }
+    .hero-art {
+      background: #1b0b12;
+      border-bottom: 1px solid rgba(199, 166, 106, .22);
+      line-height: 0;
+    }
+    .hero-art img {
+      display: block;
+      width: 100%;
+      height: auto;
+      /* 元画像全体を表示。トリミングしない */
+      object-fit: contain;
+    }
+    .hero-copy {
+      width: min(100% - 36px, var(--content));
+      margin-inline: auto;
+      padding: clamp(38px, 6vw, 72px) 0 clamp(45px, 6vw, 78px);
+      text-align: center;
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font: 600 .72rem/1.4 Arial, sans-serif;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { overflow-wrap: anywhere; }
+    .hero h1 {
+      margin: 0;
+      color: var(--gold-light);
+      font-size: clamp(1.8rem, 4.7vw, 3.45rem);
+      font-weight: 500;
+      letter-spacing: .1em;
+      line-height: 1.45;
+    }
+    .hero-subtitle {
+      margin: 12px 0 8px;
+      color: var(--paper);
+      font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+      letter-spacing: .08em;
+    }
+    .hero-note { margin: 0; color: var(--muted); font-size: .94rem; }
+    .hero-note + .hero-note { margin-top: 2px; }
+    .scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 27px;
+      color: var(--gold);
+      font: .65rem/1.4 Arial, sans-serif;
+      letter-spacing: .22em;
+      text-decoration: none;
+    }
+    .scroll-cue::after { content: "↓"; font-size: 1rem; }
+
+    .section {
+      width: min(100% - 36px, var(--content));
+      margin-inline: auto;
+      padding: clamp(62px, 9vw, 108px) 0;
+    }
+    .section-heading { margin: 0 0 34px; text-align: center; }
+    .section-heading .eyebrow { margin-bottom: 8px; }
+    .section-heading h2 {
+      margin: 0;
+      color: var(--gold-light);
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      font-weight: 500;
+      letter-spacing: .12em;
+    }
+    .section-heading h2::after {
+      content: "";
+      display: block;
+      width: 54px;
+      height: 1px;
+      margin: 15px auto 0;
+      background: var(--red-bright);
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(230px, .82fr) minmax(0, 1.18fr);
+      align-items: center;
+      gap: clamp(28px, 6vw, 74px);
+    }
+    .about-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      padding: 12px;
+      background: linear-gradient(135deg, rgba(199,166,106,.12), rgba(141,24,43,.12));
+      border: 1px solid var(--line);
+    }
+    .about-art img {
+      display: block;
+      width: 100%;
+      height: min(70vh, 720px);
+      object-fit: contain;
+      object-position: center;
+    }
+    .about-text { max-width: 610px; }
+    .about-text p { margin: 0 0 1.1em; color: #e5d8cd; }
+    .about-text .lead { color: var(--gold-light); font-size: 1.12rem; }
+
+    .works-section { width: 100%; max-width: none; padding-inline: 0; background: rgba(7, 4, 6, .27); }
+    .works-section > .section-heading, .works-groups { width: min(100% - 36px, var(--content)); margin-inline: auto; }
+    .works-groups { display: grid; gap: 42px; }
+    .work-group h3 {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0 0 17px;
+      color: var(--gold-light);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+    }
+    .work-group h3::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    .work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .work-card {
+      min-width: 0;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid rgba(199,166,106,.28);
+      background: #1a0c12;
+      box-shadow: 0 9px 24px rgba(0,0,0,.16);
+      transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .work-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(234,211,160,.78);
+      box-shadow: 0 13px 32px rgba(0,0,0,.3);
+    }
+    .work-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #211018;
+    }
+    .work-group[data-kind="header"] .work-card img { aspect-ratio: 3 / 1; }
+
+    .video-grid, .social-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .video-card, .social-card {
+      min-width: 0;
+      padding: clamp(22px, 4vw, 36px);
+      text-align: center;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(54,19,29,.72), rgba(22,10,15,.82));
+    }
+    .account-icon {
+      display: block;
+      width: 138px;
+      height: 138px;
+      margin: 0 auto 18px;
+      padding: 4px;
+      object-fit: contain;
+      background: #f7f1eb;
+      border: 1px solid rgba(234,211,160,.65);
+      border-radius: 50%;
+    }
+    .video-card h3, .social-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold-light);
+      font-size: 1.04rem;
+      font-weight: 500;
+    }
+    .account-url {
+      display: inline-block;
+      max-width: 100%;
+      color: var(--muted);
+      font: .8rem/1.7 Arial, sans-serif;
+      overflow-wrap: anywhere;
+      text-decoration-color: rgba(199,166,106,.5);
+      text-underline-offset: 4px;
+    }
+    .account-url:hover { color: var(--gold-light); }
+    .social-mark {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 17px;
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      font: 700 1.6rem/1 Arial, sans-serif;
+    }
+
+    .contact-section { padding-top: 20px; }
+    .contact-panel {
+      padding: clamp(30px, 6vw, 55px) 22px;
+      text-align: center;
+      border: 1px solid var(--gold);
+      background:
+        linear-gradient(130deg, rgba(141,24,43,.24), transparent 60%),
+        rgba(28, 12, 18, .7);
+    }
+    .contact-panel p { margin: 0 auto 22px; color: var(--muted); }
+    .gold-button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 26px;
+      color: var(--ink);
+      background: var(--gold-light);
+      border: 1px solid var(--gold-light);
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .2s ease, color .2s ease;
+    }
+    .gold-button:hover { color: var(--gold-light); background: transparent; }
+    .gold-button span { font: 700 1.1rem/1 Arial, sans-serif; }
+
+    .site-footer {
+      padding: 28px 18px 35px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      color: #a99a92;
+      font-size: .75rem;
+    }
+    .site-footer a { color: var(--gold); text-decoration: none; }
+    .back-top { display: inline-block; margin-bottom: 8px; }
+
+    /* 紅葉：形・大きさ・落下速度・横揺れをJavaScriptで個別にランダム化 */
+    #maple-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .falling-leaf {
+      position: absolute;
+      top: -14vh;
+      left: var(--left);
+      width: var(--size);
+      height: var(--size);
+      color: var(--leaf-color);
+      opacity: var(--leaf-opacity);
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,.25));
+      animation: leaf-fall var(--duration) var(--delay) linear infinite;
+      will-change: transform;
+    }
+    .falling-leaf svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .falling-leaf path { fill: currentColor; stroke: rgba(55,10,17,.45); stroke-width: 1.1; stroke-linejoin: round; }
+    .falling-leaf .vein { fill: none; stroke: rgba(63,17,18,.42); stroke-width: 1.3; stroke-linecap: round; }
+    @keyframes leaf-fall {
+      0% { transform: translate3d(0, -10vh, 0) rotate(var(--rot-start)) scale(var(--scale)); }
+      22% { transform: translate3d(var(--sway-a), 24vh, 0) rotate(calc(var(--rot-start) + 95deg)) scale(var(--scale)); }
+      51% { transform: translate3d(var(--sway-b), 56vh, 0) rotate(calc(var(--rot-start) + 205deg)) scale(var(--scale)); }
+      76% { transform: translate3d(var(--sway-c), 88vh, 0) rotate(calc(var(--rot-start) + 285deg)) scale(var(--scale)); }
+      100% { transform: translate3d(var(--sway-d), 118vh, 0) rotate(calc(var(--rot-start) + 430deg)) scale(var(--scale)); }
+    }
+
+    @media (max-width: 760px) {
+      .header-inner { width: 100%; min-height: auto; align-items: stretch; flex-direction: column; gap: 0; padding: 12px 16px 0; }
+      .brand { text-align: center; font-size: .9rem; }
+      .main-nav { width: 100%; justify-content: flex-start; gap: 19px; margin-top: 6px; }
+      .main-nav a { padding: 12px 0 15px; font-size: .66rem; }
+      .main-nav a::after { bottom: 7px; }
+      html { scroll-padding-top: 104px; }
+      .about-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .about-art { width: min(100%, 500px); margin-inline: auto; }
+      .about-art img { height: min(67vh, 650px); }
+      .about-text { max-width: 680px; margin-inline: auto; }
+      .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .works-groups { gap: 32px; }
+      .video-grid, .social-grid { gap: 12px; }
+      .video-card, .social-card { padding: 20px 12px; }
+      .account-icon { width: 112px; height: 112px; }
+    }
+    @media (max-width: 420px) {
+      .hero-copy { width: min(100% - 28px, var(--content)); }
+      .section, .works-section > .section-heading, .works-groups { width: min(100% - 28px, var(--content)); }
+      .works-section { width: 100%; }
+      .video-grid, .social-grid { grid-template-columns: minmax(0, 1fr); }
+      .account-icon { width: 124px; height: 124px; }
+      .account-url { font-size: .76rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      #maple-layer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="maple-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home">赤刃亭 is ポートフォリオ</a>
+      <nav class="main-nav" aria-label="メインナビゲーション">
+        <a href="#home">HOME</a>
+        <a href="#works">WORKS</a>
+        <a href="#videos">VIDEOS</a>
+        <a href="#about">ABOUT</a>
+        <a href="#links">LINKS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-labelledby="site-title">
+      <div class="hero-art">
+        <!-- 1枚目：画像全体が見えるよう、切り抜かず元の比率で表示 -->
+        <img src="assets/hero.jpg" alt="赤刃くれはのヘッダーイラスト" fetchpriority="high">
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">CREATIVE PORTFOLIO</p>
+        <h1 id="site-title">赤刃亭isポートフォリオ</h1>
+        <p class="hero-subtitle">創る。壊す。そしてまた壊す。</p>
+        <p class="hero-note">成功体験が失敗を招く事もある故に、</p>
+        <p class="hero-note">過去に囚われないよう生きてます。</p>
+        <a class="scroll-cue" href="#works">SCROLL TO EXPLORE</a>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="section-heading">
+        <p class="eyebrow">ABOUT</p>
+        <h2 id="about-title">About</h2>
+      </div>
+      <div class="about-layout">
+        <div class="about-art">
+          <!-- 2枚目：縦長画像も全体が見えるよう object-fit: contain -->
+          <img src="assets/about.png" alt="紅葉の中に立つ赤髪のキャラクター" loading="lazy">
+        </div>
+        <div class="about-text">
+          <p class="lead">赤刃亭isくれはのポートフォリオへようこそ。</p>
+          <p>ここでは、境界無く作ってきた創作物を紹介しています。</p>
+          <p>気が付くと何にでも手を出していますよ。お気を付け遊ばせ？</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section works-section" id="works" aria-labelledby="works-title">
+      <div class="section-heading">
+        <p class="eyebrow">SELECTED CREATIONS</p>
+        <h2 id="works-title">Works</h2>
+      </div>
+      <div class="works-groups" id="works-groups">
+        <!-- JavaScriptのWORKS配列から、カテゴリ別に画像だけを表示します -->
+      </div>
+    </section>
+
+    <section class="section" id="videos" aria-labelledby="videos-title">
+      <div class="section-heading">
+        <p class="eyebrow">WATCH & FOLLOW</p>
+        <h2 id="videos-title">Videos</h2>
+      </div>
+      <div class="video-grid">
+        <article class="video-card">
+          <!-- 3枚目：料理アカウントのアイコン -->
+          <a href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%AD%E3%81%AE%E3%81%8F%E3%82%8C%E3%81%AF" target="_blank" rel="noopener noreferrer" aria-label="YouTube 料理アカウントを開く">
+            <img class="account-icon" src="assets/video-cooking.jpg" alt="料理アカウントのアイコン" loading="lazy">
+          </a>
+          <h3>料理アカウント</h3>
+          <a class="account-url" href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%AD%E3%81%AE%E3%81%8F%E3%82%8C%E3%81%AF" target="_blank" rel="noopener noreferrer">YouTube チャンネルを見る ↗</a>
+        </article>
+        <article class="video-card">
+          <!-- 4枚目：ゲームアカウントのアイコン -->
+          <a href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%ADis%E3%81%8F%E3%82%8C%E3%81%AF" target="_blank" rel="noopener noreferrer" aria-label="YouTube ゲームアカウントを開く">
+            <img class="account-icon" src="assets/video-game.png" alt="ゲームアカウントのアイコン" loading="lazy">
+          </a>
+          <h3>ゲームアカウント</h3>
+          <a class="account-url" href="https://www.youtube.com/@%E8%B5%A4%E5%88%83%E4%BA%ADis%E3%81%8F%E3%82%8C%E3%81%AF" target="_blank" rel="noopener noreferrer">YouTube チャンネルを見る ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="links" aria-labelledby="links-title">
+      <div class="section-heading">
+        <p class="eyebrow">ELSEWHERE ON THE WEB</p>
+        <h2 id="links-title">各種リンク</h2>
+      </div>
+      <div class="social-grid">
+        <article class="social-card">
+          <div class="social-mark" aria-hidden="true">𝕏</div>
+          <h3>X / 料理アカウント</h3>
+          <a class="account-url" href="https://x.com/kurehanizumu" target="_blank" rel="noopener noreferrer">x.com/kurehanizumu ↗</a>
+        </article>
+        <article class="social-card">
+          <div class="social-mark" aria-hidden="true">𝕏</div>
+          <h3>X / gameアカウント</h3>
+          <a class="account-url" href="https://x.com/noukinn_o" target="_blank" rel="noopener noreferrer">x.com/noukinn_o ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-panel">
+        <div class="section-heading">
+          <p class="eyebrow">CONTACT</p>
+          <h2 id="contact-title">お問い合わせ</h2>
+        </div>
+        <p>Xの料理アカウントへ移動します。プロフィールからDMをお送りください。</p>
+        <a class="gold-button" href="https://x.com/kurehanizumu" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">𝕏</span> 料理アカウントでDMする ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="back-top" href="#home">↑ PAGE TOP</a>
+    <div>© <span id="year"></span> 赤刃亭isくれは</div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // 作品画像の差し替え場所
+    // image のファイル名を変えるだけで、掲載画像を入れ替えられます。
+    // 画像ファイルは assets/works/ フォルダに置いてください。
+    // 例：image: "assets/works/header-01.jpg"
+    // ============================================================
+    const WORKS = [
+      { category: "Xヘッダー", kind: "header", image: "assets/works/header-01.svg", alt: "Xヘッダー作品1" },
+      { category: "Xヘッダー", kind: "header", image: "assets/works/header-02.svg", alt: "Xヘッダー作品2" },
+      { category: "Xヘッダー", kind: "header", image: "assets/works/header-03.svg", alt: "Xヘッダー作品3" },
+      { category: "料理", kind: "normal", image: "assets/works/cooking-01.svg", alt: "料理作品1" },
+      { category: "料理", kind: "normal", image: "assets/works/cooking-02.svg", alt: "料理作品2" },
+      { category: "料理", kind: "normal", image: "assets/works/cooking-03.svg", alt: "料理作品3" },
+      { category: "絵", kind: "normal", image: "assets/works/art-01.svg", alt: "絵の作品1" },
+      { category: "絵", kind: "normal", image: "assets/works/art-02.svg", alt: "絵の作品2" },
+      { category: "ハンドメイドアクセ", kind: "normal", image: "assets/works/accessory-01.svg", alt: "ハンドメイドアクセサリー作品" },
+      { category: "プラモデル", kind: "normal", image: "assets/works/model-01.svg", alt: "プラモデル作品" }
+    ];
+
+    const groupsElement = document.getElementById("works-groups");
+    const categoryOrder = ["Xヘッダー", "料理", "絵", "ハンドメイドアクセ", "プラモデル"];
+
+    categoryOrder.forEach((category) => {
+      const items = WORKS.filter((work) => work.category === category);
+      if (!items.length) return;
+
+      const group = document.createElement("section");
+      group.className = "work-group";
+      group.dataset.kind = items[0].kind;
+
+      const heading = document.createElement("h3");
+      heading.textContent = category;
+      group.appendChild(heading);
+
+      const grid = document.createElement("div");
+      grid.className = "work-grid";
+
+      items.forEach((work) => {
+        const figure = document.createElement("figure");
+        figure.className = "work-card";
+        const image = document.createElement("img");
+        image.src = work.image;
+        image.alt = work.alt;
+        image.loading = "lazy";
+        figure.appendChild(image);
+        grid.appendChild(figure);
+      });
+
+      group.appendChild(grid);
+      groupsElement.appendChild(group);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 形の異なる紅葉のシルエット。中央の葉脈も形に合わせて描画します。
+    const LEAF_SHAPES = [
+      { path: "M50 96 L43 73 L25 86 L30 66 L7 66 L22 49 L4 38 L29 34 L25 12 L43 25 L50 4 L57 25 L76 12 L71 34 L96 38 L78 49 L93 66 L70 66 L75 86 L57 73 Z", vein: "M50 91 L50 31 M50 58 L27 43 M50 64 L73 44 M50 47 L38 31 M50 47 L63 31 M50 76 L34 70 M50 76 L67 70" },
+      { path: "M48 95 L39 75 L18 82 L31 63 L8 57 L26 45 L14 27 L37 33 L42 8 L53 27 L72 12 L69 35 L94 34 L77 51 L91 68 L67 66 L70 88 L53 73 Z", vein: "M49 89 L51 31 M49 61 L29 48 M51 66 L77 48 M50 47 L42 30 M50 47 L65 32 M50 76 L34 72 M51 76 L65 74" },
+      { path: "M51 97 L45 72 L29 88 L31 64 L10 69 L24 50 L3 42 L29 36 L19 17 L42 27 L52 5 L60 27 L80 14 L72 37 L97 39 L78 53 L88 72 L66 66 L68 89 L55 72 Z", vein: "M52 91 L53 31 M51 59 L29 46 M53 65 L75 48 M52 46 L43 31 M53 46 L68 30 M52 77 L35 73 M53 77 L64 73" },
+      { path: "M49 94 L41 76 L23 80 L29 62 L6 60 L25 47 L11 35 L34 34 L32 10 L48 27 L60 5 L64 29 L85 20 L75 41 L97 47 L76 56 L87 75 L64 66 L59 89 L51 71 Z", vein: "M50 89 L52 31 M51 60 L28 49 M52 66 L75 49 M52 46 L42 31 M52 46 L66 32 M52 77 L36 69 M52 77 L63 72" },
+      { path: "M50 96 L46 70 L27 84 L32 61 L9 65 L24 48 L5 34 L31 34 L27 14 L44 26 L52 3 L58 26 L77 15 L71 37 L95 40 L77 52 L91 66 L69 66 L73 87 L56 72 Z", vein: "M51 91 L52 31 M51 59 L29 44 M52 64 L75 46 M52 46 L41 31 M52 46 L66 31 M52 77 L35 70 M52 77 L66 71" },
+      { path: "M47 94 L39 72 L20 87 L29 64 L7 65 L24 48 L9 36 L31 32 L28 9 L46 26 L54 6 L61 27 L81 12 L74 36 L96 42 L78 53 L88 70 L65 65 L66 88 L53 73 Z", vein: "M49 89 L52 30 M50 60 L29 46 M52 65 L76 47 M52 45 L41 30 M52 45 L67 31 M51 77 L34 70 M52 77 L64 71" }
+    ];
+    const LEAF_COLORS = ["#b62b36", "#d24a32", "#9e1e31", "#bd873d", "#d1a04e", "#7f1729"];
+    const mapleLayer = document.getElementById("maple-layer");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reducedMotion) {
+      const leafCount = window.innerWidth < 600 ? 17 : 29;
+      for (let i = 0; i < leafCount; i += 1) {
+        const shape = LEAF_SHAPES[Math.floor(Math.random() * LEAF_SHAPES.length)];
+        const color = LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)];
+        const leaf = document.createElement("span");
+        leaf.className = "falling-leaf";
+        leaf.style.setProperty("--left", `${Math.random() * 100}%`);
+        leaf.style.setProperty("--size", `${16 + Math.random() * 29}px`);
+        leaf.style.setProperty("--leaf-color", color);
+        leaf.style.setProperty("--leaf-opacity", `${0.28 + Math.random() * 0.46}`);
+        leaf.style.setProperty("--duration", `${17 + Math.random() * 25}s`);
+        leaf.style.setProperty("--delay", `${-Math.random() * 40}s`);
+        leaf.style.setProperty("--rot-start", `${Math.floor(Math.random() * 360)}deg`);
+        leaf.style.setProperty("--scale", `${0.7 + Math.random() * 0.8}`);
+        leaf.style.setProperty("--sway-a", `${-90 + Math.random() * 180}px`);
+        leaf.style.setProperty("--sway-b", `${-125 + Math.random() * 250}px`);
+        leaf.style.setProperty("--sway-c", `${-95 + Math.random() * 190}px`);
+        leaf.style.setProperty("--sway-d", `${-140 + Math.random() * 280}px`);
+        leaf.innerHTML = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${shape.path}"></path><path class="vein" d="${shape.vein}"></path></svg>`;
+        mapleLayer.appendChild(leaf);
+      }
+    }
+  </script>
+</body>
+</html>
