@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0909">
+  <meta name="description" content="赤刃亭 is — 作品、映像、創作活動をひとつの場所へ。">
+  <title>赤刃亭 is | Creative Portfolio</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/hero-placeholder.svg" as="image">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="leaf-layer" id="leaf-layer" aria-hidden="true"></div>
+  <header class="hero" id="home">
+    <nav class="top-nav" aria-label="メインナビゲーション">
+      <a class="brand" href="#home" aria-label="赤刃亭 is ホーム">赤刃亭 <span>is</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="メニューを開く">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#home">HOME</a><a href="#works">WORKS</a><a href="#videos">VIDEOS</a>
+        <a href="#about">ABOUT</a><a href="#links">LINKS</a><a href="#contact">CONTACT</a>
+      </div>
+    </nav>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="eyebrow">JAPANESE MODERN · CREATIVE PORTFOLIO</p>
+      <p class="hero-kanji" aria-hidden="true">紅葉、静寂、創作。</p>
+      <h1>赤刃亭 <span>is</span></h1>
+      <p class="hero-subtitle">作品・映像・創作活動を、ひとつの場所へ。</p>
+      <a class="button button-gold" href="#works">VIEW WORKS <span aria-hidden="true">↓</span></a>
+    </div>
+    <a class="scroll-cue" href="#works"><span></span>SCROLL</a>
+  </header>
+
+  <main>
+    <section class="section works-section" id="works">
+      <div class="section-heading">
+        <p class="eyebrow">SELECTED CREATIONS</p>
+        <h2>WORKS <span>作品</span></h2>
+        <p>これまでの制作物をまとめています。作品を選ぶと詳細を表示します。</p>
+      </div>
+      <div class="works-grid" id="works-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section videos-section" id="videos">
+      <div class="section-heading">
+        <p class="eyebrow">WATCH & DISCOVER</p>
+        <h2>VIDEOS <span>映像</span></h2>
+        <p>動画や配信などの活動はこちらから。</p>
+      </div>
+      <div class="feature-grid" id="youtube-list"></div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="about-mark" aria-hidden="true">赤</div>
+      <div class="about-copy">
+        <p class="eyebrow">THE CREATOR</p>
+        <h2>ABOUT <span>自己紹介</span></h2>
+        <p id="about-text">ここにプロフィールを掲載します。活動内容や制作ジャンル、創作で大切にしていることなどを自由に紹介してください。</p>
+        <p class="about-note">静けさの中に、ひとさじの鮮烈さを。</p>
+      </div>
+    </section>
+
+    <section class="section links-section" id="links">
+      <div class="section-heading">
+        <p class="eyebrow">ELSEWHERE</p>
+        <h2>LINKS <span>各種リンク</span></h2>
+        <p>各アカウント・関連サイトはこちら。</p>
+      </div>
+      <div class="link-list" id="social-links"></div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-inner">
+        <p class="eyebrow">LET'S TALK</p>
+        <h2>CONTACT</h2>
+        <p>ご連絡・ご相談はXのDMへお願いいたします。</p>
+        <a class="button button-crimson" id="contact-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">XでDMを送る <span aria-hidden="true">↗</span></a>
+        <p class="contact-small">※ DMの受信設定によっては送信できない場合があります。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#home">赤刃亭 <span>is</span></a>
+    <p>© <span id="year"></span> 赤刃亭 is. All rights reserved.</p>
+    <a href="#home" class="back-top">BACK TO TOP ↑</a>
+  </footer>
+
+  <dialog class="work-modal" id="work-modal" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="閉じる">×</button>
+    <button class="modal-arrow modal-prev" id="modal-prev" aria-label="前の作品">‹</button>
+    <div class="modal-content">
+      <img id="modal-image" src="assets/work-01.svg" alt="">
+      <div class="modal-copy">
+        <p class="eyebrow" id="modal-count">WORK 01 / 09</p>
+        <h2 id="modal-title">作品タイトル</h2>
+        <p id="modal-description"></p>
+      </div>
+    </div>
+    <button class="modal-arrow modal-next" id="modal-next" aria-label="次の作品">›</button>
+  </dialog>
+</body>
+</html>
